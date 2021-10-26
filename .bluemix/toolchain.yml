@@ -1,0 +1,92 @@
+version: 2
+template:
+  name: Build your own toolchain
+  description: october-13-kristina
+  required:
+    - githubconsolidated00
+    - private_worker02
+toolchain:
+  name: october-13-kristina
+services:
+  githubconsolidated00:
+    parameters:
+      extra_capabilities:
+        - capability_id: git.issues
+          display_name: Issues
+          dashboard_url: https://github.com/kristinochka/tekton-catalog/issues
+          label: tekton-catalog
+          tags:
+            - think
+            - code
+          enabled: false
+          readme: false
+      label: tekton-catalog
+      type: link
+      legal: false
+      git_id: github
+      api_root_url: https://api.github.com
+      blind_connection: false
+      owner_id: kristinochka
+      repo_url: https://github.com/kristinochka/tekton-catalog.git
+      token_url: https://otc-github-consolidated-broker.us-east.devops.cloud.ibm.com/github/token?git_id=github
+      private_repo: false
+      has_issues: false
+      auto_init: false
+      enable_traceability: false
+      authorized: github
+      integration_owner: IBMid-27000759PH
+      repo_name: tekton-catalog
+    service_id: githubconsolidated
+  githubconsolidated01:
+    parameters:
+      extra_capabilities:
+        - capability_id: git.issues
+          display_name: Issues
+          dashboard_url: https://github.com/kristinochka/zopeneditor-sample/issues
+          label: zopeneditor-sample
+          tags:
+            - think
+            - code
+          enabled: false
+          readme: false
+      label: zopeneditor-sample
+      type: link
+      legal: false
+      git_id: github
+      api_root_url: https://api.github.com
+      blind_connection: false
+      owner_id: kristinochka
+      repo_url: https://github.com/kristinochka/zopeneditor-sample.git
+      token_url: https://otc-github-consolidated-broker.us-east.devops.cloud.ibm.com/github/token?git_id=github
+      private_repo: false
+      has_issues: false
+      auto_init: false
+      enable_traceability: false
+      authorized: github
+      integration_owner: IBMid-27000759PH
+      repo_name: zopeneditor-sample
+    service_id: githubconsolidated
+  private_worker02:
+    parameters:
+      label: wazidev-worker-kristina
+      name: wazidev-worker-kristina
+      workerQueueIdentifier: ServiceId-5fb41e32-da3c-4b81-b403-bbd7da8b3a9c
+      workerQueueCredentials:
+      configuration: '****'
+    service_id: private_worker
+  pipeline03:
+    parameters:
+      label: Git tasks
+      type: tekton
+      name: Git tasks
+      ui_pipeline: true
+      configuration:
+        env:
+          githubconsolidated00: githubconsolidated00
+          private_worker02: '{{services.private_worker02.parameters.name}}'
+        content:
+          $text: pipeline_pipeline03.yml
+      services:
+        - githubconsolidated00
+        - private_worker02
+    service_id: pipeline

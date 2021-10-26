@@ -1,0 +1,73 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline
+spec:
+  params:
+    - name: repository
+      description: the git repo
+    - name: branch
+      description: the branch for the git repo
+    - name: apikey
+      description: the ibmcloud api key
+    - name: zosSshKey
+      description: The z/OS SSH private key
+    - name: appName
+      description: The application name
+      default: zopeneditor-sample
+    - name: pipeline-debug
+      default: "0"
+  workspaces:
+    - name: pipeline-ws
+  tasks:
+    - name: clone-task
+      taskRef:
+        name: git-clone-repo
+      params:
+        - name: continuous-delivery-context-secret
+          value: "secure-properties"
+        - name: ibmcloud-apikey-secret-key
+          value: "apikey"
+        - name: repository
+          value: $(params.repository)
+        - name: branch
+          value: $(params.branch)
+        - name: directory-name
+          value: "git"
+        - name: pipeline-debug
+          value: $(params.pipeline-debug)
+        - name: properties-file
+          value: ""
+        - name: git-client-image
+          value: "quay.io/wire/alpine-git"
+      workspaces:
+        - name: output
+          workspace: pipeline-ws
+      securityContext:
+        privileged: true
+    - name: dbb-build-task
+      runAfter: [clone-task]
+      taskRef:
+        name: dbb-build-task
+      params:
+        - name: repository
+          value: $(params.repository)
+        - name: branch
+          value: $(params.branch)
+        - name: apikey
+          value: $(params.apikey)
+        - name: zosSshKey
+          value: $(params.zosSshKey)
+        - name: appName
+          value: $(params.appName)
+        - name: git-repository
+          value: $(tasks.clone-task.results.git-repository)
+        - name: git-branch
+          value: $(tasks.clone-task.results.git-branch)
+        - name: git-commit
+          value: $(tasks.clone-task.results.git-commit)
+        - name: pipeline-debug
+          value: $(params.pipeline-debug)
+      workspaces:
+        - name: output
+          workspace: pipeline-ws

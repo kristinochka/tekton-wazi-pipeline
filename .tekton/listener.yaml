@@ -1,0 +1,78 @@
+apiVersion: tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: template
+spec:
+  params:
+    - name: repository
+      description: The git repo
+    - name: branch
+      description: the branch for the git repo
+    - name: apikey
+      description: the ibmcloud api key
+    - name: zosSshKey
+      description: The z/OS SSH private key
+    - name: appName
+      description: The application name
+      default: zopeneditor-sample
+    - name: pipeline-debug
+      default: "0"
+  resourcetemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: pipelinerun-$(uid)-pvc
+      spec:
+        resources:
+          requests:
+            storage: 5Gi
+        volumeMode: Filesystem
+        storageClassName: tekton-local-storage
+        accessModes:
+          - ReadWriteOnce
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: pipelinerun-$(uid)
+      spec:
+        pipelineRef:
+          name: pipeline
+        workspaces:
+          - name: pipeline-ws
+            persistentVolumeClaim:
+              claimName: pipelinerun-$(uid)-pvc
+        params:
+          - name: repository
+            value: $(params.repository)
+          - name: branch
+            value: $(params.branch)
+          - name: apikey
+            value: $(params.apikey)
+          - name: zosSshKey
+            value: $(params.zosSshKey)
+          - name: appName
+            value: $(params.appName)
+          - name: pipeline-debug
+            value: $(params.pipeline-debug)
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: binding
+spec:
+  params:
+    - name: repository
+      value: "https://github.com/kristinochka/tekton-catalog"
+    - name: branch
+      value: "master"
+---
+apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: listener
+spec:
+  triggers:
+    - binding:
+        name: binding
+      template:
+        name: template

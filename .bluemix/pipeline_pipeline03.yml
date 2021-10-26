@@ -1,0 +1,25 @@
+private_worker: ${private_worker02}
+properties:
+  - type: secure
+    name: apikey
+    value: ""
+  - type: text
+    name: repository
+    value: https://github.com/kristinochka/zopeneditor-sample
+  - type: secure
+    name: zosSshKey
+    value: ""
+triggers:
+  - type: manual
+    name: Manual Trigger - 0
+    eventListener: listener
+    properties: []
+    private_worker: wazidev-worker-kristina
+    concurrency:
+      limited: true
+      maxConcurrentRuns: 1
+inputs:
+  - type: git
+    path: dbb
+    branch: master
+    service: ${githubconsolidated00}

@@ -1,0 +1,77 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: dbb-build-task
+spec:
+  params:
+    - name: repository
+      description: the git repo
+    - name: branch
+      description: the branch for the git repo
+      default: master
+    - name: apikey
+      description: the ibmcloud api key
+    - name: zosSshKey
+      description: The z/OS SSH private key
+    - name: appName
+      description: The application name
+    - name: git-repository
+      description: The url of the git repository
+    - name: git-branch
+      description: The repository branch on which the build has been performed
+    - name: git-commit
+      description: The git commit id
+    - name: pipeline-debug
+      default: "0"
+  workspaces:
+    - name: output
+      mountPath: /artifacts
+  steps:
+    - name: dbb-build
+      image: ibmcom/pipeline-base-image
+      env:
+        - name: REPOSITORY
+          value: $(params.repository)
+        - name: BRANCH
+          value: $(params.branch)
+        - name: IBMCLOUD_API_KEY
+          value: $(params.apikey)
+        - name: ZOS_SSH_KEY
+          value: $(params.zosSshKey)
+        - name: APP_NAME
+          value: $(params.appName)
+        - name: GIT_URL
+          value: $(params.git-repository)
+        - name: GIT_BRANCH
+          value: $(params.git-branch)
+        - name: GIT_COMMIT
+          value: $(params.git-commit)
+        - name: JOB_URL
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipeline-run-url']
+        - name: BUILD_NUMBER
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/build-number']
+      script: |
+        #!/bin/bash
+        set -x
+        echo $PWD
+        whoami
+        echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
+        chmod 700 id_rsa
+        echo "Executing dbb full build"
+        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@wazidev-demo-inf.fyre.ibm.com\
+           -p 31652 "/u/ibmuser/tekton/dbb-build3.sh"
+        rc=$?
+      volumeMounts:
+        - mountPath: /cd-config
+          name: cd-config-volume
+  volumes:
+    - name: cd-config-volume
+      configMap:
+        name: toolchain
+        items:
+          - key: toolchain.json
+            path: toolchain.json
