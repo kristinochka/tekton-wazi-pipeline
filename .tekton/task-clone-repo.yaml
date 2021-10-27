@@ -101,6 +101,7 @@ spec:
         privileged: true
       script: |
         #!/bin/bash
+        set -x
         set -e -o pipefail
 
         if [ $PIPELINE_DEBUG == 1 ]; then
