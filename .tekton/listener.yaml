@@ -62,7 +62,7 @@ metadata:
 spec:
   params:
     - name: repository
-      value: "https://github.com/kristinochka/tekton-catalog"
+      value: "https://github.com/kristinochka/tekton-wazi-pipeline"
     - name: branch
       value: "master"
 ---
