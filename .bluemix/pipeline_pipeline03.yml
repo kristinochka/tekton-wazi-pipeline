@@ -20,6 +20,6 @@ triggers:
       maxConcurrentRuns: 1
 inputs:
   - type: git
-    path: dbb
+    path: .tekton
     branch: master
     service: ${githubconsolidated00}
