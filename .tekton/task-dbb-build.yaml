@@ -61,7 +61,7 @@ spec:
         whoami
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
-        echo "Executing dbb full build"
+        echo "Executing dbb full build!"
         ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@wazidev-demo-inf.fyre.ibm.com\
            -p 31652 "/u/ibmuser/tekton/dbb-build3.sh"
         rc=$?
