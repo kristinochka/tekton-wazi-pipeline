@@ -46,6 +46,10 @@ spec:
           value: $(params.git-branch)
         - name: GIT_COMMIT
           value: $(params.git-commit)
+        - name: ZOS_HOST
+          value: $(params.zosHost)
+        - name: ZOS_SSH_PORT
+          value: $(params.zos-ssh-port)
         - name: JOB_URL
           valueFrom:
             fieldRef:
@@ -61,9 +65,8 @@ spec:
         whoami
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
-        echo "Executing dbb full build!"
-        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@wazidev-demo-inf.fyre.ibm.com\
-           -p 31652 "/u/ibmuser/tekton/dbb-build3.sh"
+        echo "Executing dbb full build"
+        ssh -i id_rsa -o "StrictHostKeyChecking=no" ubmuser@$ZOS_HOST -p $ZOS_SSH_PORT "/u/ibmuser/tekton/dbb-build.sh"
         rc=$?
       volumeMounts:
         - mountPath: /cd-config
