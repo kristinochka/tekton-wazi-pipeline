@@ -30,7 +30,7 @@ spec:
       mountPath: /artifacts
   steps:
     - name: dbb-build
-      image: ibmcom/pipeline-base-image
+      image: ibmcom/pipeline-base-image:2.13
       env:
         - name: REPOSITORY
           value: $(params.repository)
