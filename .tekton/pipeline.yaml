@@ -58,6 +58,10 @@ spec:
           value: $(params.apikey)
         - name: zosSshKey
           value: $(params.zosSshKey)
+        - name: zosHost
+          value: $(params.zosHost)
+        - name: zos-ssh-port
+          value: $(params.zos-ssh-port)
         - name: appName
           value: $(params.appName)
         - name: git-repository
