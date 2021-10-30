@@ -13,6 +13,10 @@ spec:
       description: the ibmcloud api key
     - name: zos-ssh-key
       description: The z/OS SSH private key
+    - name: zos-host
+      description: The z/OS host name
+    - name: zos-ssh-port
+      description: The z/OS SSH port
     - name: app-name
       description: The application name
     - name: git-repository
@@ -36,18 +40,18 @@ spec:
           value: $(params.apikey)
         - name: ZOS_SSH_KEY
           value: $(params.zos-ssh-key)
+        - name: ZOS_HOST
+          value: $(params.zos-host)
+        - name: ZOS_SSH_PORT
+          value: $(params.zos-ssh-port)
         - name: APP_NAME
-          value: $(params.app-nert ame)
+          value: $(params.app-name)
         - name: GIT_URL
           value: $(params.git-repository)
         - name: GIT_BRANCH
           value: $(params.git-branch)
         - name: GIT_COMMIT
           value: $(params.git-commit)
-        - name: ZOS_HOST
-          value: $(params.zos-host)
-        - name: ZOS_SSH_PORT
-          value: $(params.zos-ssh-port)
         - name: JOB_URL
           valueFrom:
             fieldRef:

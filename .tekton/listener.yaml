@@ -54,6 +54,10 @@ spec:
             value: $(params.apikey)
           - name: zos-ssh-key
             value: $(params.zos-ssh-key)
+          - name: zos-host
+            value: $(params.zos-host)
+          - name: zos-ssh-port
+            value: $(params.zos-ssh-port)
           - name: app-name
             value: $(params.app-name)
           - name: pipeline-debug

@@ -12,6 +12,10 @@ spec:
       description: the ibmcloud api key
     - name: zos-ssh-key
       description: The z/OS SSH private key
+    - name: zos-ssh-port
+      description: The z/OS SSH port
+    - name: zos-host
+      description: The z/OS host names
     - name: app-name
       description: The application name
       default: zopeneditor-sample
