@@ -21,8 +21,6 @@ spec:
       description: The repository branch on which the build has been performed
     - name: git-commit
       description: The git commit id
-    - name: pipeline-debug
-      default: "0"
   workspaces:
     - name: output
       mountPath: /artifacts
