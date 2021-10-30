@@ -11,9 +11,9 @@ spec:
       default: master
     - name: apikey
       description: the ibmcloud api key
-    - name: zosSshKey
+    - name: zos-ssh-key
       description: The z/OS SSH private key
-    - name: appName
+    - name: app-name
       description: The application name
     - name: git-repository
       description: The url of the git repository
@@ -35,9 +35,9 @@ spec:
         - name: IBMCLOUD_API_KEY
           value: $(params.apikey)
         - name: ZOS_SSH_KEY
-          value: $(params.zosSshKey)
+          value: $(params.zos-ssh-key)
         - name: APP_NAME
-          value: $(params.appName)
+          value: $(params.app-nert ame)
         - name: GIT_URL
           value: $(params.git-repository)
         - name: GIT_BRANCH
@@ -45,7 +45,7 @@ spec:
         - name: GIT_COMMIT
           value: $(params.git-commit)
         - name: ZOS_HOST
-          value: $(params.zosHost)
+          value: $(params.zos-host)
         - name: ZOS_SSH_PORT
           value: $(params.zos-ssh-port)
         - name: JOB_URL

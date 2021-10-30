@@ -10,13 +10,13 @@ spec:
       description: the branch for the git repo
     - name: apikey
       description: the ibmcloud api key
-    - name: zosSshKey
+    - name: zos-ssh-key
       description: The z/OS SSH private key
-    - name: zosHost
+    - name: zos-host
       description: z/OS host name
     - name: zos-ssh-port
       description: z/OS SSH port
-    - name: appName
+    - name: app-name
       description: The application name
       default: zopeneditor-sample
     - name: pipeline-debug
@@ -52,10 +52,10 @@ spec:
             value: $(params.branch)
           - name: apikey
             value: $(params.apikey)
-          - name: zosSshKey
-            value: $(params.zosSshKey)
-          - name: appName
-            value: $(params.appName)
+          - name: zos-ssh-key
+            value: $(params.zos-ssh-key)
+          - name: app-name
+            value: $(params.app-name)
           - name: pipeline-debug
             value: $(params.pipeline-debug)
 ---
