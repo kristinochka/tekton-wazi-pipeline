@@ -7,7 +7,13 @@ properties:
     name: repository
     value: https://github.com/kristinochka/zopeneditor-sample
   - type: secure
-    name: zosSshKey
+    name: zos-ssh-key
+    value: ""
+  - type: text
+    name: zos-ssh-port
+    value: ""
+  - type: text
+    name: zos-host
     value: ""
 triggers:
   - type: manual
