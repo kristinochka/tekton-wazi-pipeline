@@ -1,12 +1,12 @@
 version: 2
 template:
   name: Build your own toolchain
-  description: october-13-kristina
+  description: wazi-dbb-toolchain
   required:
     - githubconsolidated00
     - private_worker02
 toolchain:
-  name: october-13-kristina
+  name: wazi-dbb-toolchain
 services:
   githubconsolidated00:
     parameters:
