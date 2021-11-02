@@ -67,11 +67,11 @@ spec:
         set -x
         echo $PWD
         whoami
-        echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
-        chmod 700 id_rsa
         WORKSPACE_DIR="$(workspaces.output.path)"
         ZOS_WORK_DIR=/u/ibmuser/tekton
-        cd /artifacts; cd git; ls -la
+        echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
+        chmod 700 id_rsa
+        ls -la $WORKSPACE_DIR/git/.tekton
         sftp -o "StrictHostKeyChecking=no" -i id_rsa -P $ZOS_SSH_PORT ibmuser@$ZOS_HOST << EOF
         get $WORKSPACE_DIR/git/.tekton/dbb-build.sh $ZOS_WORK_DIR
         EOF
