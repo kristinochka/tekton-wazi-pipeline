@@ -69,13 +69,13 @@ spec:
         whoami
         WORKSPACE_DIR="$(workspaces.output.path)"
         ZOS_WORK_DIR=/u/ibmuser/tekton
+        SCRIPT_NAME=dbb-build.sh
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
-        ls -la $WORKSPACE_DIR/git/.tekton
         sftp -o "StrictHostKeyChecking=no" -i id_rsa -P $ZOS_SSH_PORT ibmuser@$ZOS_HOST << EOF
-        get $WORKSPACE_DIR/git/.tekton/dbb-build.sh $ZOS_WORK_DIR
+        put $WORKSPACE_DIR/git/.tekton/$SCRIPT_NAME $ZOS_WORK_DIR
         EOF
-        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@$ZOS_HOST -p $ZOS_SSH_PORT "$ZOS_WORK_DIR/dbb-build.sh"
+        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@$ZOS_HOST -p $ZOS_SSH_PORT "$ZOS_WORK_DIR/$SCRIPT_NAME"
         rc=$?
       volumeMounts:
         - mountPath: /cd-config
