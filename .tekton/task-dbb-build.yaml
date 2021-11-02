@@ -72,7 +72,7 @@ spec:
         SCRIPT_NAME=dbb-build.sh
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
-        scp -i id_rsa -P $ZOS_SSH_PORT $WORKSPACE_DIR/git/.tekton/$SCRIPT_NAME ibmuser@$ZOS_HOST:$ZOS_WORK_DIR/$SCRIPT_NAME
+        scp -i id_rsa -o "StrictHostKeyChecking=no" -P $ZOS_SSH_PORT $WORKSPACE_DIR/git/.tekton/$SCRIPT_NAME ibmuser@$ZOS_HOST:$ZOS_WORK_DIR/$SCRIPT_NAME
         ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@$ZOS_HOST -p $ZOS_SSH_PORT "$ZOS_WORK_DIR/$SCRIPT_NAME"
         rc=$?
       volumeMounts:
