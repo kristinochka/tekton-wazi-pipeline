@@ -2,7 +2,7 @@
 set -x
 mkdir -p '/u/ibmuser/tekton'
 rm -rf /u/ibmuser/tekton/zopeneditor-sample
-git clone https://github.com/kristinochka/zopeneditor-sample '/u/ibmuser/tekton/zopeneditor-sample'
+git clone https://github.com/kristinochka/tekton-wazi-pipeline '/u/ibmuser/tekton/tekton-wazi-pipeline'
 WORKSPACE='/u/ibmuser/tekton'
 DBB_LOG_DIR='/u/ibmuser/tekton/dbb-logs'
 export DBB_HOME='/usr/lpp/IBM/dbb'

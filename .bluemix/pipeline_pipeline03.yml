@@ -5,7 +5,7 @@ properties:
     value: ""
   - type: text
     name: repository
-    value: https://github.com/kristinochka/zopeneditor-sample
+    value: https://github.com/kristinochka/tekton-wazi-pipeline
   - type: secure
     name: zos-ssh-key
     value: ""
