@@ -67,15 +67,11 @@ spec:
         whoami
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
+        ls
+        cd /cd-config; ls
+        cd /steps; ls
         ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@$ZOS_HOST -p $ZOS_SSH_PORT /bin/sh << EOF
-        set -x;
-        mkdir -p '/u/ibmuser/tekton';
-        rm -rf /u/ibmuser/tekton/zopeneditor-sample;
-        git clone $REPOSITORY '/u/ibmuser/tekton/zopeneditor-sample';
-        WORKSPACE='/u/ibmuser/tekton';
-        DBB_LOG_DIR='/u/ibmuser/tekton/dbb-logs';
-        export DBB_HOME='/usr/lpp/IBM/dbb';
-        /usr/lpp/IBM/dbb/bin/groovyz -DBB_PERSONAL_DAEMON /u/ibmuser/tekton/dbb-zappbuild/build.groovy --workspace /u/ibmuser/tekton --application zopeneditor-sample --hlq IBMUSER.SAMPLE --outDir $DBB_LOG_DIR --fullBuild;
+        pwd
         EOF
         rc=$?
       volumeMounts:
