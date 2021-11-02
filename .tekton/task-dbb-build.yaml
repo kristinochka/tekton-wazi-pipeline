@@ -11,9 +11,13 @@ spec:
       default: master
     - name: apikey
       description: the ibmcloud api key
-    - name: zosSshKey
+    - name: zos-ssh-key
       description: The z/OS SSH private key
-    - name: appName
+    - name: zos-host
+      description: The z/OS host name
+    - name: zos-ssh-port
+      description: The z/OS SSH port
+    - name: app-name
       description: The application name
     - name: git-repository
       description: The url of the git repository
@@ -21,14 +25,12 @@ spec:
       description: The repository branch on which the build has been performed
     - name: git-commit
       description: The git commit id
-    - name: pipeline-debug
-      default: "0"
   workspaces:
     - name: output
       mountPath: /artifacts
   steps:
     - name: dbb-build
-      image: ibmcom/pipeline-base-image
+      image: ibmcom/pipeline-base-image:2.13
       env:
         - name: REPOSITORY
           value: $(params.repository)
@@ -37,9 +39,13 @@ spec:
         - name: IBMCLOUD_API_KEY
           value: $(params.apikey)
         - name: ZOS_SSH_KEY
-          value: $(params.zosSshKey)
+          value: $(params.zos-ssh-key)
+        - name: ZOS_HOST
+          value: $(params.zos-host)
+        - name: ZOS_SSH_PORT
+          value: $(params.zos-ssh-port)
         - name: APP_NAME
-          value: $(params.appName)
+          value: $(params.app-name)
         - name: GIT_URL
           value: $(params.git-repository)
         - name: GIT_BRANCH
@@ -54,16 +60,22 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.annotations['devops.cloud.ibm.com/build-number']
+      securityContext:
+        privileged: true
       script: |
         #!/bin/bash
         set -x
         echo $PWD
         whoami
+        WORKSPACE_DIR="$(workspaces.output.path)"
+        ZOS_WORK_DIR=/u/ibmuser/tekton
         echo $ZOS_SSH_KEY | base64 -w 0 --decode > id_rsa
         chmod 700 id_rsa
-        echo "Executing dbb full build"
-        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@wazidev-demo-inf.fyre.ibm.com\
-           -p 31652 "/u/ibmuser/tekton/dbb-build3.sh"
+        ls -la $WORKSPACE_DIR/git/.tekton
+        sftp -o "StrictHostKeyChecking=no" -i id_rsa -P $ZOS_SSH_PORT ibmuser@$ZOS_HOST << EOF
+        get $WORKSPACE_DIR/git/.tekton/dbb-build.sh $ZOS_WORK_DIR
+        EOF
+        ssh -i id_rsa -o "StrictHostKeyChecking=no" ibmuser@$ZOS_HOST -p $ZOS_SSH_PORT "$ZOS_WORK_DIR/dbb-build.sh"
         rc=$?
       volumeMounts:
         - mountPath: /cd-config
