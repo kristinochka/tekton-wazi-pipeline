@@ -37,36 +37,7 @@ services:
       integration_owner: IBMid-27000759PH
       repo_name: tekton-catalog
     service_id: githubconsolidated
-  githubconsolidated01:
-    parameters:
-      extra_capabilities:
-        - capability_id: git.issues
-          display_name: Issues
-          dashboard_url: https://github.com/kristinochka/zopeneditor-sample/issues
-          label: zopeneditor-sample
-          tags:
-            - think
-            - code
-          enabled: false
-          readme: false
-      label: zopeneditor-sample
-      type: link
-      legal: false
-      git_id: github
-      api_root_url: https://api.github.com
-      blind_connection: false
-      owner_id: kristinochka
-      repo_url: https://github.com/kristinochka/zopeneditor-sample.git
-      token_url: https://otc-github-consolidated-broker.us-east.devops.cloud.ibm.com/github/token?git_id=github
-      private_repo: false
-      has_issues: false
-      auto_init: false
-      enable_traceability: false
-      authorized: github
-      integration_owner: IBMid-27000759PH
-      repo_name: zopeneditor-sample
-    service_id: githubconsolidated
-  private_worker02:
+  private_worker01:
     parameters:
       label: wazidev-worker-kristina
       name: wazidev-worker-kristina
@@ -74,7 +45,7 @@ services:
       workerQueueCredentials:
       configuration: "****"
     service_id: private_worker
-  pipeline03:
+  pipeline02:
     parameters:
       label: Git tasks
       type: tekton
