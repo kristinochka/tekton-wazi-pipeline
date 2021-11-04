@@ -4,7 +4,6 @@ template:
   description: wazi-dbb-toolchain
   required:
     - githubconsolidated00
-    - private_worker02
 toolchain:
   name: wazi-dbb-toolchain
 services:
@@ -37,14 +36,6 @@ services:
       integration_owner: IBMid-27000759PH
       repo_name: tekton-catalog
     service_id: githubconsolidated
-  private_worker01:
-    parameters:
-      label: wazidev-worker-kristina
-      name: wazidev-worker-kristina
-      workerQueueIdentifier: ServiceId-5fb41e32-da3c-4b81-b403-bbd7da8b3a9c
-      workerQueueCredentials:
-      configuration: "****"
-    service_id: private_worker
   pipeline02:
     parameters:
       label: Git tasks
@@ -54,10 +45,8 @@ services:
       configuration:
         env:
           githubconsolidated00: githubconsolidated00
-          private_worker02: "{{services.private_worker02.parameters.name}}"
         content:
           $text: pipeline_pipeline03.yml
       services:
         - githubconsolidated00
-        - private_worker02
     service_id: pipeline
