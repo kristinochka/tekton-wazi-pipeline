@@ -23,7 +23,7 @@ triggers:
       limited: true
       maxConcurrentRuns: 1
   - type: git
-    branch: master
+    branch: use-provided-worker
     events:
       push: true
       pull_request: true
@@ -34,5 +34,5 @@ triggers:
 inputs:
   - type: git
     path: .tekton
-    branch: master
+    branch: use-provided-worker
     service: ${githubconsolidated00}

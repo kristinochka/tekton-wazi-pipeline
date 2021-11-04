@@ -72,7 +72,7 @@ spec:
     - name: repository
       value: "https://github.com/kristinochka/tekton-wazi-pipeline"
     - name: branch
-      value: "master"
+      value: "use-provided-worker"
 ---
 apiVersion: tekton.dev/v1beta1
 kind: EventListener
