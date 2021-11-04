@@ -8,7 +8,7 @@ spec:
       description: the git repo
     - name: branch
       description: the branch for the git repo
-      default: use-provided-worker
+      default: master
     - name: apikey
       description: the ibmcloud api key
     - name: zos-ssh-key

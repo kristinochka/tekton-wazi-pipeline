@@ -1,2 +1,2 @@
 ### To get started, click this button:
-[![Create toolchain](https://cloud.ibm.com/devops/graphics/create_toolchain_button.png)](https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:us-east&repository=https://github.com/kristinochka/tekton-wazi-pipeline&branch=use-provided-worker)
+[![Create toolchain](https://cloud.ibm.com/devops/graphics/create_toolchain_button.png)](https://cloud.ibm.com/devops/setup/deploy?env_id=ibm:yp:us-east&repository=https://github.com/kristinochka/tekton-wazi-pipeline&branch=master)
