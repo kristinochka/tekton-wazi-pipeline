@@ -5,14 +5,14 @@ WORKSPACE='/u/ibmuser/tekton'
 DBB_LOG_DIR="${WORKSPACE}/dbb-logs"
 CODE_REPO_NAME='tekton-wazi-pipeline'
 CODE_REPO_PATH="${WORKSPACE}/${CODE_REPO_NAME}"
-DBB_ZAPPBUILD_PATH="${WORKSPACE}/dbb-zappbuild
+DBB_ZAPPBUILD_PATH="${WORKSPACE}/dbb-zappbuild"
 
 mkdir -p "${WORKSPACE}"
 mkdir -p "${DBB_LOG_DIR}"
 
-rm -rf "${REPO_PATH}"
-rm -rf "${DBB_ZAPPBUILD_PATH}
-echo $PATH
+rm -rf "${CODE_REPO_PATH}"
+rm -rf "${DBB_ZAPPBUILD_PATH}"
+
 cd "${WORKSPACE}"
 # export PATH=${PATH}:/rsusr/ported/bin:/usr/lpp/IBM/dbb/bin
 /rsusr/ported/bin/git clone https://github.com/IBM/dbb-zappbuild
