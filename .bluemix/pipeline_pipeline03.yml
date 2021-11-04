@@ -1,4 +1,3 @@
-private_worker: ${private_worker02}
 properties:
   - type: secure
     name: apikey
@@ -20,7 +19,6 @@ triggers:
     name: Manual Trigger - 0
     eventListener: listener
     properties: []
-    private_worker: wazidev-worker-kristina
     concurrency:
       limited: true
       maxConcurrentRuns: 1
@@ -32,7 +30,6 @@ triggers:
     name: Git Trigger - 0
     eventListener: listener
     properties: []
-    private_worker: wazidev-worker-kristina
     service: ${githubconsolidated00}
 inputs:
   - type: git
